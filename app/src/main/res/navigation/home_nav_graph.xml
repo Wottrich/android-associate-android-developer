@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/pomodoroFragment">
+
+    <fragment
+        android:id="@+id/pomodoroFragment"
+        android:name="wottrich.github.io.pomodorouniverse.home.PomodoroFragment"
+        tools:layout="@layout/fragment_pomodoro"/>
+
+</navigation>

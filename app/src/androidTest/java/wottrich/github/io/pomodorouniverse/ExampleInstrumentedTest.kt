@@ -1,4 +1,4 @@
-package wottrich.github.io.reverserodomopo
+package wottrich.github.io.pomodorouniverse
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("wottrich.github.io.reverserodomopo", appContext.packageName)
+        assertEquals("wottrich.github.io.pomodorouniverse", appContext.packageName)
     }
 }
