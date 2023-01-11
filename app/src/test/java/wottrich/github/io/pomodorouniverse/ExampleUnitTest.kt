@@ -1,4 +1,4 @@
-package wottrich.github.io.reverserodomopo
+package wottrich.github.io.pomodorouniverse
 
 import org.junit.Test
 
