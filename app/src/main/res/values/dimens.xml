@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pomodoro_progress_indicator_size">200dp</dimen>
+
+<!--    <dimen name="small">12sp</dimen>-->
+<!--    <dimen name="small_x">16sp</dimen>-->
+<!--    <dimen name="normal">18sp</dimen>-->
+<!--    <dimen name="normal_x">20sp</dimen>-->
+<!--    <dimen name="normal_xx">24p</dimen>-->
+<!--    <dimen name="large">28sp</dimen>-->
+<!--    <dimen name="large_x">32sp</dimen>-->
+</resources>

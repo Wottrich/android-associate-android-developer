@@ -11,6 +11,9 @@ object Versions {
     //Koin
     const val koinVersion = "3.1.5"
 
+    //Hilt
+    const val hiltAndroidVersion = "2.44"
+
     //Navigation
     const val navigationComponentsVersion = "2.5.3"
 

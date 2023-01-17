@@ -3,8 +3,10 @@ package wottrich.github.io.pomodorouniverse.base
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
 import wottrich.github.io.pomodorouniverse.R
 
+@AndroidEntryPoint
 class NestedNavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

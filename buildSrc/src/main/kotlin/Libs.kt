@@ -28,6 +28,10 @@ object Libs {
         "io.insert-koin:koin-androidx-compose:${Versions.koinVersion}"
     const val insertKoinTest = "io.insert-koin:koin-test:${Versions.koinVersion}"
 
+    //Hilt
+    const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltAndroidVersion}"
+    const val hiltAndroidKapt = "com.google.dagger:hilt-android-compiler:${Versions.hiltAndroidVersion}"
+
     //Compose
     const val composeUi = "androidx.compose.ui:ui:${Versions.composeVersion}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeVersion}"
@@ -114,6 +118,11 @@ fun DependencyHandlerScope.koin() {
     "implementation"(Libs.insertKoinCore)
     "implementation"(Libs.insertKoinAndroid)
 // TODO uncomment when compose implemented    "implementation"(Libs.insertKoinAndroidCompose)
+}
+
+fun DependencyHandlerScope.hilt() {
+    "implementation"(Libs.hiltAndroid)
+    "kapt"(Libs.hiltAndroidKapt)
 }
 
 fun DependencyHandlerScope.navigation(/*withAnimation: Boolean = false*/) {
