@@ -1,9 +1,5 @@
 package wottrich.github.io.pomodorouniverse.home.presentation.viewmodels
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.os.CountDownTimer
-import android.view.animation.LinearInterpolator
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +11,7 @@ import wottrich.github.io.pomodorouniverse.base.extensions.asLiveData
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
 import wottrich.github.io.pomodorouniverse.home.presentation.action.PomodoroAction
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroPlayerStatus
+import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroState
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroUiState
 
 @HiltViewModel
@@ -23,18 +20,29 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
     private val _uiState = MutableLiveData(PomodoroUiState())
     val uiState = _uiState.asLiveData()
 
+    private val _pomodoroState = MutableLiveData(PomodoroState())
+    val pomodoroState = _pomodoroState.asLiveData()
+
     private var pomodoroType: PomodoroType = PomodoroType.WORK
     private val pomodoroTimer = PomodoroTimer().setPomodoroListeners()
 
     override fun sendAction(action: PomodoroAction.Action) {
         when (action) {
-            PomodoroAction.Action.PlayPomodoro -> playPomodoroTimer()
-            PomodoroAction.Action.PausePomodoro -> pausePomodoroTimer()
+            PomodoroAction.Action.PomodoroButtonClicked -> playPomodoroTimer()
             PomodoroAction.Action.StopPomodoro -> stopPomodoroTimer()
         }
     }
 
     private fun playPomodoroTimer() {
+        val currentState = checkNotNull(pomodoroState.value)
+        when (currentState.playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> pausePomodoroTimer()
+            PomodoroPlayerStatus.STOPPED -> startPomodoroTimer()
+            PomodoroPlayerStatus.PAUSED -> startPomodoroTimer()
+        }
+    }
+
+    private fun startPomodoroTimer() {
         pomodoroTimer.setPomodoroTotalTime(getPomodoroTimerByPomodoroType())
         pomodoroTimer.start()
     }
@@ -53,8 +61,7 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
             _uiState.value =
                 state.copy(
                     pomodoroPlayerState = state.pomodoroPlayerState.copy(
-                        remainingPercentage = animatedValue,
-                        type = pomodoroType
+                        remainingPercentage = animatedValue
                     )
                 )
         }
@@ -85,13 +92,8 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
     }
 
     private fun updatePlayerStatus(playerStatus: PomodoroPlayerStatus) {
-        val state = checkNotNull(uiState.value)
-        _uiState.value =
-            state.copy(
-                pomodoroPlayerState = state.pomodoroPlayerState.copy(
-                    playerStatus = playerStatus
-                )
-            )
+        val state = checkNotNull(pomodoroState.value)
+        _pomodoroState.value = state.copy(playerStatus = playerStatus)
     }
 
     private fun changePomodoroType() {
@@ -100,14 +102,7 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
             PomodoroType.BREAK -> PomodoroType.WORK
         }
         pomodoroType = nextPomodoroType
-        val state = checkNotNull(uiState.value)
-        _uiState.value =
-            state.copy(
-                pomodoroPlayerState = state.pomodoroPlayerState.copy(
-                    type = pomodoroType
-                )
-            )
-
+        _pomodoroState.value = pomodoroState.value?.copy(type = pomodoroType)
     }
 
     private fun getPomodoroTimerByPomodoroType(): Long {

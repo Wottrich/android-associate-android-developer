@@ -1,23 +1,20 @@
 package wottrich.github.io.pomodorouniverse.home.presentation.view
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
-import java.util.concurrent.TimeUnit
 import wottrich.github.io.pomodorouniverse.databinding.FragmentPomodoroBinding
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
 import wottrich.github.io.pomodorouniverse.home.presentation.action.PomodoroAction
-import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroPlayerState
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroPlayerStatus
+import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroState
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroUiState
 import wottrich.github.io.pomodorouniverse.home.presentation.viewmodels.PomodoroViewModel
 
@@ -25,9 +22,6 @@ import wottrich.github.io.pomodorouniverse.home.presentation.viewmodels.Pomodoro
 class PomodoroFragment : Fragment() {
 
     private var binding: FragmentPomodoroBinding? = null
-
-    private var pomodoroTimer: CountDownTimer? = null
-
     private val viewModel: PomodoroViewModel by viewModels()
 
     override fun onCreateView(
@@ -51,50 +45,110 @@ class PomodoroFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding?.playPomodoroButton?.setOnClickListener {
-            viewModel.sendAction(PomodoroAction.Action.PlayPomodoro)
-            setupPauseButton()
-        }
-        binding?.pausePomodoroButton?.setOnClickListener {
-            viewModel.sendAction(PomodoroAction.Action.PausePomodoro)
-            setupPlayButton()
+        binding?.pomodoroButton?.setOnClickListener {
+            viewModel.sendAction(PomodoroAction.Action.PomodoroButtonClicked)
         }
     }
 
     private fun setupObservers() {
         viewModel.uiState.observe(viewLifecycleOwner, ::handleUiState)
+        viewModel.pomodoroState.observe(viewLifecycleOwner, ::handlePomodoroState)
+    }
+
+    private fun handlePomodoroState(state: PomodoroState) {
+        setupPomodoroSnackbar(state)
+        setupPomodoroButton(state)
+        setupPomodoroStatus(state)
     }
 
     private fun handleUiState(state: PomodoroUiState) {
         val playerState = state.pomodoroPlayerState
         binding?.pomodoroTimerTextView?.text = playerState.timeFormatted
-        setupPomodoroStatusTextView(playerState)
         binding?.circleProgressBar?.progress = playerState.remainingPercentage
     }
 
-    private fun setupPomodoroStatusTextView(playerState: PomodoroPlayerState) {
-        val status = when (playerState.playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> {
-                when (playerState.type) {
-                    PomodoroType.WORK -> "Você está trabalhando..."
-                    PomodoroType.BREAK -> "Aproveite seu intervalo!"
-                }
-            }
-            PomodoroPlayerStatus.STOPPED -> {
-                setupPlayButton()
-                when (playerState.type) {
-                    PomodoroType.WORK -> "Começar a trabalhar"
-                    PomodoroType.BREAK -> "Começar intervalo"
-                }
-            }
-            PomodoroPlayerStatus.PAUSED -> {
-                when (playerState.type) {
-                    PomodoroType.WORK -> "Você pausou seu trabalho"
-                    PomodoroType.BREAK -> "Você pausou seu intervalo"
-                }
-            }
+    private fun setupPomodoroStatus(pomodoroState: PomodoroState) {
+        val status = when (pomodoroState.type) {
+            PomodoroType.WORK -> getWorkPomodoroStatus(pomodoroState.playerStatus)
+            PomodoroType.BREAK -> getBreakPomodoroStatus(pomodoroState.playerStatus)
         }
         binding?.pomodoroStatusTextView?.text = status
+    }
+
+    private fun getWorkPomodoroStatus(playerStatus: PomodoroPlayerStatus): String? {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Foque no trabalho!"
+            PomodoroPlayerStatus.PAUSED -> "Tome o tempo que for preciso para voltar \uD83D\uDE0A"
+            PomodoroPlayerStatus.STOPPED -> null
+        }
+    }
+
+    private fun getBreakPomodoroStatus(playerStatus: PomodoroPlayerStatus): String? {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Seu intervalo é sagrado!"
+            PomodoroPlayerStatus.PAUSED -> "Tome o tempo que for preciso para voltar \uD83D\uDE0A"
+            PomodoroPlayerStatus.STOPPED -> null
+        }
+    }
+
+    private fun setupPomodoroSnackbar(pomodoroState: PomodoroState) {
+        val status = when (pomodoroState.type) {
+            PomodoroType.WORK -> getWorkPomodoroSnackbarMessage(pomodoroState.playerStatus)
+            PomodoroType.BREAK -> getBreakPomodoroSnackbarMessage(pomodoroState.playerStatus)
+        }
+        if (status != null) {
+            showSnackbar(status, binding?.pomodoroButton)
+        }
+    }
+
+    private fun showSnackbar(status: String, anchorView: View?) {
+        binding?.root?.let {
+            Snackbar.make(it, status, Snackbar.LENGTH_LONG).apply {
+                anchorView?.let {
+                    this.anchorView = anchorView
+                }
+            }.show()
+        }
+    }
+
+    private fun getWorkPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): String? {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Você está trabalhando..."
+            PomodoroPlayerStatus.PAUSED -> "Você pausou seu trabalho"
+            PomodoroPlayerStatus.STOPPED -> null
+        }
+    }
+
+    private fun getBreakPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): String? {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Aproveite seu intervalo!"
+            PomodoroPlayerStatus.PAUSED -> "Você pausou seu intervalo"
+            PomodoroPlayerStatus.STOPPED -> null
+        }
+    }
+
+    private fun setupPomodoroButton(pomodoroState: PomodoroState) {
+        val buttonLabel = when (pomodoroState.type) {
+            PomodoroType.WORK -> getWorkButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
+            PomodoroType.BREAK -> getBreakButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
+        }
+        binding?.pomodoroButton?.text = buttonLabel
+    }
+
+    private fun getWorkButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): String {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Pausar"
+            PomodoroPlayerStatus.STOPPED -> "Começar a trabalhar"
+            PomodoroPlayerStatus.PAUSED -> "Continuar"
+        }
+    }
+
+    private fun getBreakButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): String {
+        return when (playerStatus) {
+            PomodoroPlayerStatus.RUNNING -> "Pausar"
+            PomodoroPlayerStatus.STOPPED -> "Começar o intervalo"
+            PomodoroPlayerStatus.PAUSED -> "Continuar"
+        }
     }
 
     private fun setupAutoSizeTextSupportApiLevel() {
@@ -105,16 +159,13 @@ class PomodoroFragment : Fragment() {
                 TypedValue.COMPLEX_UNIT_DIP
             )
         }
-    }
-
-    private fun setupPlayButton() {
-        binding?.pausePomodoroButton?.isVisible = false
-        binding?.playPomodoroButton?.isVisible = true
-    }
-
-    private fun setupPauseButton() {
-        binding?.pausePomodoroButton?.isVisible = true
-        binding?.playPomodoroButton?.isVisible = false
+        binding?.pomodoroStatusTextView?.let {
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                it,
+                10, 28, 1,
+                TypedValue.COMPLEX_UNIT_DIP
+            )
+        }
     }
 
     override fun onDestroyView() {
