@@ -2,11 +2,11 @@
 <resources>
     <dimen name="pomodoro_progress_indicator_size">200dp</dimen>
 
-<!--    <dimen name="small">12sp</dimen>-->
-<!--    <dimen name="small_x">16sp</dimen>-->
-<!--    <dimen name="normal">18sp</dimen>-->
-<!--    <dimen name="normal_x">20sp</dimen>-->
-<!--    <dimen name="normal_xx">24p</dimen>-->
-<!--    <dimen name="large">28sp</dimen>-->
-<!--    <dimen name="large_x">32sp</dimen>-->
+    <dimen name="token_small">12dp</dimen>
+    <dimen name="token_small_x">16dp</dimen>
+    <dimen name="token_normal">18dp</dimen>
+    <dimen name="token_normal_x">20dp</dimen>
+    <dimen name="token_normal_xx">24dp</dimen>
+    <dimen name="token_large">28dp</dimen>
+    <dimen name="token_large_x">32dp</dimen>
 </resources>

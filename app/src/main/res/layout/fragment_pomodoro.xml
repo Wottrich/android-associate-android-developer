@@ -28,7 +28,6 @@
         />
 
     <TextView
-
         android:id="@+id/pomodoroTimerTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -45,8 +44,8 @@
         android:id="@+id/pomodoroStatusTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/token_large_x"
+        android:layout_marginTop="@dimen/token_normal_x"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:maxLines="1"
@@ -60,9 +59,9 @@
         android:id="@+id/pomodoroButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/pomodoro_fragment_start_button_label"
+        android:layout_marginHorizontal="@dimen/token_normal_x"
+        android:layout_marginBottom="@dimen/token_normal_x"
+        android:text="@string/pomodoro_button_running_work_state_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
