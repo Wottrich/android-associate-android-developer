@@ -6,16 +6,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import wottrich.github.io.pomodorouniverse.R
 import wottrich.github.io.pomodorouniverse.base.PomodoroTimer
+import wottrich.github.io.pomodorouniverse.base.StringResProvider
 import wottrich.github.io.pomodorouniverse.base.extensions.asLiveData
+import wottrich.github.io.pomodorouniverse.base.models.NotificationModel
+import wottrich.github.io.pomodorouniverse.home.data.PomodoroNotificationChannels
+import wottrich.github.io.pomodorouniverse.home.data.PomodoroNotificationManager
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
 import wottrich.github.io.pomodorouniverse.home.presentation.action.PomodoroAction
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroPlayerStatus
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroState
 import wottrich.github.io.pomodorouniverse.home.presentation.models.PomodoroUiState
+import wottrich.github.io.pomodorouniverse.home.presentation.models.updateDescription
 
 @HiltViewModel
-class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
+class PomodoroViewModel @Inject constructor(
+    private val notificationManager: PomodoroNotificationManager,
+    private val stringResProvider: StringResProvider
+) : ViewModel(), PomodoroAction {
 
     private val _uiState = MutableLiveData(PomodoroUiState())
     val uiState = _uiState.asLiveData()
@@ -26,10 +35,15 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
     private var pomodoroType: PomodoroType = PomodoroType.WORK
     private val pomodoroTimer = PomodoroTimer().setPomodoroListeners()
 
+    private val pomodoroTimerNotification = NotificationModel().setNotificationConfiguration()
+    private var shouldUpdateNotification = false
+
     override fun sendAction(action: PomodoroAction.Action) {
         when (action) {
             PomodoroAction.Action.PomodoroButtonClicked -> playPomodoroTimer()
             PomodoroAction.Action.StopPomodoro -> stopPomodoroTimer()
+            PomodoroAction.Action.OnPauseLifecycle -> handleOnPauseAction()
+            PomodoroAction.Action.OnResumeLifecycle -> handleOnResumeAction()
         }
     }
 
@@ -55,6 +69,17 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
         pomodoroTimer.stop()
     }
 
+    private fun NotificationModel.setNotificationConfiguration(): NotificationModel {
+        return copy(
+            content = content.copy(
+                title = stringResProvider.getString(R.string.notification_pomodoro_timer_title)
+            ),
+            configuration = configuration.copy(
+                channelName = PomodoroNotificationChannels.POMODORO_TIMER_CHANNEL_ID
+            )
+        )
+    }
+
     private fun PomodoroTimer.setPomodoroListeners(): PomodoroTimer {
         onCirclePercentageChange = { animatedValue ->
             val state = checkNotNull(uiState.value)
@@ -67,6 +92,7 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
         }
         onClockTimeChange = { currentTime ->
             val timeFormatted = formatElapsedTime(currentTime)
+            updateNotificationWithTimeFormattedIfNeeded(timeFormatted)
             val state = checkNotNull(uiState.value)
             _uiState.value =
                 state.copy(
@@ -91,6 +117,14 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
         return this
     }
 
+    private fun updateNotificationWithTimeFormattedIfNeeded(timeFormatted: String) {
+        if (shouldUpdateNotification) {
+            notificationManager.updateNotification(
+                pomodoroTimerNotification.updateDescription(timeFormatted)
+            )
+        }
+    }
+
     private fun updatePlayerStatus(playerStatus: PomodoroPlayerStatus) {
         val state = checkNotNull(pomodoroState.value)
         _pomodoroState.value = state.copy(playerStatus = playerStatus)
@@ -109,6 +143,19 @@ class PomodoroViewModel @Inject constructor() : ViewModel(), PomodoroAction {
         return when (pomodoroType) {
             PomodoroType.WORK -> POMODORO_WORK_TIME_IN_MILLIS
             PomodoroType.BREAK -> POMODORO_BREAK_TIME_IN_MILLIS
+        }
+    }
+
+    private fun handleOnResumeAction() {
+        shouldUpdateNotification = false
+        notificationManager.removeNotification(pomodoroTimerNotification.id)
+    }
+
+    private fun handleOnPauseAction() {
+        val state = checkNotNull(pomodoroState.value)
+        if (state.playerStatus == PomodoroPlayerStatus.RUNNING) {
+            shouldUpdateNotification = true
+            notificationManager.buildNotification(pomodoroTimerNotification)
         }
     }
 

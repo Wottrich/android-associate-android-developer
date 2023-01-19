@@ -168,6 +168,16 @@ class PomodoroFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        viewModel.sendAction(PomodoroAction.Action.OnResumeLifecycle)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        viewModel.sendAction(PomodoroAction.Action.OnPauseLifecycle)
+        super.onPause()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
