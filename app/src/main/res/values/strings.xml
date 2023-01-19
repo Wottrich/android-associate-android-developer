@@ -1,6 +1,32 @@
 <resources>
     <string name="app_name">PomodoroUniverse</string>
-    <string name="pomodoro_fragment_pause_label">Pausado</string>
-    <string name="pomodoro_fragment_pause_button_label">Pausar</string>
-    <string name="pomodoro_fragment_start_button_label">Começar</string>
+
+    <!--  Button Work State  -->
+    <string name="pomodoro_button_paused_work_state_label">Continuar</string>
+    <string name="pomodoro_button_running_work_state_label">Pausar</string>
+    <string name="pomodoro_button_stopped_work_state_label">Começar a trabalhar</string>
+
+    <!--  Button Break State  -->
+    <string name="pomodoro_button_paused_break_state_label">Continuar</string>
+    <string name="pomodoro_button_running_break_state_label">Pausar</string>
+    <string name="pomodoro_button_stopped_break_state_label">Começar o intervalo</string>
+
+    <!--  Status Work State  -->
+    <string name="pomodoro_status_running_work_state_label">Foque no trabalho!</string>
+    <string name="pomodoro_status_paused_work_state_label">Tome o tempo que for preciso para voltar 😊</string>
+
+    <!--  Status Break State  -->
+    <string name="pomodoro_status_running_break_state_label">Seu intervalo é sagrado!</string>
+    <string name="pomodoro_status_paused_break_state_label">Tome o tempo que for preciso para voltar 😊</string>
+
+    <!--  Snackbar Work State  -->
+    <string name="pomodoro_snackbar_running_work_state_label">Você está trabalhando…</string>
+    <string name="pomodoro_snackbar_paused_work_state_label">Você pausou seu trabalho</string>
+
+    <!--  Snackbar Break State  -->
+    <string name="pomodoro_snackbar_running_break_state_label">Aproveite seu intervalo!</string>
+    <string name="pomodoro_snackbar_paused_break_state_label">Você pausou seu intervalo</string>
+
+    <!--  Notification Strings  -->
+    <string name="notification_pomodoro_timer_title">PomodoroTimer</string>
 </resources>

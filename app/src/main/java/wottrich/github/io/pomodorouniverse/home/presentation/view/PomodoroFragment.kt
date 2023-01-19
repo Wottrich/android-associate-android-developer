@@ -5,11 +5,13 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import wottrich.github.io.pomodorouniverse.R
 import wottrich.github.io.pomodorouniverse.databinding.FragmentPomodoroBinding
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
 import wottrich.github.io.pomodorouniverse.home.presentation.action.PomodoroAction
@@ -68,36 +70,40 @@ class PomodoroFragment : Fragment() {
     }
 
     private fun setupPomodoroStatus(pomodoroState: PomodoroState) {
-        val status = when (pomodoroState.type) {
+        val statusRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkPomodoroStatus(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakPomodoroStatus(pomodoroState.playerStatus)
         }
-        binding?.pomodoroStatusTextView?.text = status
+        statusRes?.let {
+            binding?.pomodoroStatusTextView?.text = getString(it)
+        }
     }
 
-    private fun getWorkPomodoroStatus(playerStatus: PomodoroPlayerStatus): String? {
+    @StringRes
+    private fun getWorkPomodoroStatus(playerStatus: PomodoroPlayerStatus): Int? {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Foque no trabalho!"
-            PomodoroPlayerStatus.PAUSED -> "Tome o tempo que for preciso para voltar \uD83D\uDE0A"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_status_running_work_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_status_paused_work_state_label
             PomodoroPlayerStatus.STOPPED -> null
         }
     }
 
-    private fun getBreakPomodoroStatus(playerStatus: PomodoroPlayerStatus): String? {
+    @StringRes
+    private fun getBreakPomodoroStatus(playerStatus: PomodoroPlayerStatus): Int? {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Seu intervalo é sagrado!"
-            PomodoroPlayerStatus.PAUSED -> "Tome o tempo que for preciso para voltar \uD83D\uDE0A"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_status_running_break_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_status_paused_break_state_label
             PomodoroPlayerStatus.STOPPED -> null
         }
     }
 
     private fun setupPomodoroSnackbar(pomodoroState: PomodoroState) {
-        val status = when (pomodoroState.type) {
+        val statusRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkPomodoroSnackbarMessage(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakPomodoroSnackbarMessage(pomodoroState.playerStatus)
         }
-        if (status != null) {
-            showSnackbar(status, binding?.pomodoroButton)
+        if (statusRes != null) {
+            showSnackbar(getString(statusRes), binding?.pomodoroButton)
         }
     }
 
@@ -111,43 +117,47 @@ class PomodoroFragment : Fragment() {
         }
     }
 
-    private fun getWorkPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): String? {
+    @StringRes
+    private fun getWorkPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): Int? {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Você está trabalhando..."
-            PomodoroPlayerStatus.PAUSED -> "Você pausou seu trabalho"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_snackbar_running_work_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_snackbar_paused_work_state_label
             PomodoroPlayerStatus.STOPPED -> null
         }
     }
 
-    private fun getBreakPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): String? {
+    @StringRes
+    private fun getBreakPomodoroSnackbarMessage(playerStatus: PomodoroPlayerStatus): Int? {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Aproveite seu intervalo!"
-            PomodoroPlayerStatus.PAUSED -> "Você pausou seu intervalo"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_snackbar_running_break_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_snackbar_paused_break_state_label
             PomodoroPlayerStatus.STOPPED -> null
         }
     }
 
     private fun setupPomodoroButton(pomodoroState: PomodoroState) {
-        val buttonLabel = when (pomodoroState.type) {
+        val buttonLabelRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
         }
-        binding?.pomodoroButton?.text = buttonLabel
+        binding?.pomodoroButton?.text = getString(buttonLabelRes)
     }
 
-    private fun getWorkButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): String {
+    @StringRes
+    private fun getWorkButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): Int {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Pausar"
-            PomodoroPlayerStatus.STOPPED -> "Começar a trabalhar"
-            PomodoroPlayerStatus.PAUSED -> "Continuar"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_button_running_work_state_label
+            PomodoroPlayerStatus.STOPPED -> R.string.pomodoro_button_stopped_work_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_button_paused_work_state_label
         }
     }
 
-    private fun getBreakButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): String {
+    @StringRes
+    private fun getBreakButtonLabelFromPlayerStatus(playerStatus: PomodoroPlayerStatus): Int {
         return when (playerStatus) {
-            PomodoroPlayerStatus.RUNNING -> "Pausar"
-            PomodoroPlayerStatus.STOPPED -> "Começar o intervalo"
-            PomodoroPlayerStatus.PAUSED -> "Continuar"
+            PomodoroPlayerStatus.RUNNING -> R.string.pomodoro_button_running_break_state_label
+            PomodoroPlayerStatus.STOPPED -> R.string.pomodoro_button_stopped_break_state_label
+            PomodoroPlayerStatus.PAUSED -> R.string.pomodoro_button_paused_break_state_label
         }
     }
 
@@ -166,6 +176,16 @@ class PomodoroFragment : Fragment() {
                 TypedValue.COMPLEX_UNIT_DIP
             )
         }
+    }
+
+    override fun onResume() {
+        viewModel.sendAction(PomodoroAction.Action.OnResumeLifecycle)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        viewModel.sendAction(PomodoroAction.Action.OnPauseLifecycle)
+        super.onPause()
     }
 
     override fun onDestroyView() {
