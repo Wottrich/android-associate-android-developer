@@ -3,14 +3,13 @@ package wottrich.github.io.pomodorouniverse.home.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Locale
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import wottrich.github.io.pomodorouniverse.R
 import wottrich.github.io.pomodorouniverse.base.PomodoroTimer
+import wottrich.github.io.pomodorouniverse.base.StringFormatter
 import wottrich.github.io.pomodorouniverse.base.StringResProvider
 import wottrich.github.io.pomodorouniverse.base.extensions.asLiveData
-import wottrich.github.io.pomodorouniverse.base.models.NotificationModel
+import wottrich.github.io.pomodorouniverse.data.NotificationModel
 import wottrich.github.io.pomodorouniverse.home.data.PomodoroNotificationChannels
 import wottrich.github.io.pomodorouniverse.home.data.PomodoroNotificationManager
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
@@ -91,7 +90,7 @@ class PomodoroViewModel @Inject constructor(
                 )
         }
         onClockTimeChange = { currentTime ->
-            val timeFormatted = formatElapsedTime(currentTime)
+            val timeFormatted = StringFormatter.formatElapsedTime(currentTime)
             updateNotificationWithTimeFormattedIfNeeded(timeFormatted)
             val state = checkNotNull(uiState.value)
             _uiState.value =
@@ -157,15 +156,6 @@ class PomodoroViewModel @Inject constructor(
             shouldUpdateNotification = true
             notificationManager.buildNotification(pomodoroTimerNotification)
         }
-    }
-
-    private fun formatElapsedTime(time: Long): String {
-        return String.format(
-            Locale.getDefault(), "%02d:%02d:%02d",
-            TimeUnit.MILLISECONDS.toHours(time) % TimeUnit.DAYS.toHours(1),
-            TimeUnit.MILLISECONDS.toMinutes(time) % TimeUnit.HOURS.toMinutes(1),
-            TimeUnit.MILLISECONDS.toSeconds(time) % TimeUnit.MINUTES.toSeconds(1)
-        )
     }
 
     companion object {

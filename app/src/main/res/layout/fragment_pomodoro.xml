@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <wottrich.github.io.pomodorouniverse.widget.CircleProgressBar
+    <wottrich.github.io.pomodorouniverse.designsystem.CircleProgressBar
         android:id="@+id/circleProgressBar"
         android:layout_width="@dimen/pomodoro_progress_indicator_size"
         android:layout_height="@dimen/pomodoro_progress_indicator_size"

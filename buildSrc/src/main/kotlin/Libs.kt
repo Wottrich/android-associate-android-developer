@@ -19,7 +19,11 @@ object Libs {
 
     //Android lifecycle
     const val lifecycleRuntime =
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}"
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}"
+    const val lifecycleService =
+        "androidx.lifecycle:lifecycle-service:${Versions.lifecycleVersion}"
+    const val lifecycleLiveData =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
 
     //Koin
     const val insertKoinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
@@ -107,6 +111,8 @@ fun DependencyHandlerScope.composeUi() {
 
 fun DependencyHandlerScope.lifecycleLibs() {
     "implementation"(Libs.lifecycleRuntime)
+    "implementation"(Libs.lifecycleService)
+    "implementation"(Libs.lifecycleLiveData)
 }
 
 fun DependencyHandlerScope.coroutines() {

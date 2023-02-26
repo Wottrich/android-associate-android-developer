@@ -1,4 +1,4 @@
-package wottrich.github.io.pomodorouniverse.base.models
+package wottrich.github.io.pomodorouniverse.data
 
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat

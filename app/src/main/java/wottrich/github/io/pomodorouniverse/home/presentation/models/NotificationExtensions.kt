@@ -1,6 +1,6 @@
 package wottrich.github.io.pomodorouniverse.home.presentation.models
 
-import wottrich.github.io.pomodorouniverse.base.models.NotificationModel
+import wottrich.github.io.pomodorouniverse.data.NotificationModel
 import wottrich.github.io.pomodorouniverse.home.domain.models.PomodoroType
 
 fun NotificationModel.updateDescription(description: String): NotificationModel {

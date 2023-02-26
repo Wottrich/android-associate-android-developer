@@ -1,4 +1,4 @@
-package wottrich.github.io.pomodorouniverse.widget
+package wottrich.github.io.pomodorouniverse.designsystem
 
 import android.content.Context
 import android.graphics.Canvas
