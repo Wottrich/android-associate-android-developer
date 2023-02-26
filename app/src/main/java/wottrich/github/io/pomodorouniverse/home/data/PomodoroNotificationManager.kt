@@ -9,7 +9,7 @@ import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
-import wottrich.github.io.pomodorouniverse.base.models.NotificationModel
+import wottrich.github.io.pomodorouniverse.data.NotificationModel
 
 @Singleton
 class PomodoroNotificationManager @Inject constructor(

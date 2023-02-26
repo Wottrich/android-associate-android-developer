@@ -1,4 +1,4 @@
-package wottrich.github.io.pomodorouniverse.base.livedata
+package wottrich.github.io.pomodorouniverse.livedata
 
 import androidx.annotation.MainThread
 

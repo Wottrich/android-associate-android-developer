@@ -49,9 +49,10 @@ android {
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    lifecycleLibs()
 
     kotlinAndCoreKtx()
-    
+
     navigation()
 
     implementation(Libs.appCompat)
@@ -60,6 +61,8 @@ dependencies {
     unitTest()
 
     hilt()
+
+    room(withCompiler = true)
 
     //Test instrumental
     instrumentalTest()
