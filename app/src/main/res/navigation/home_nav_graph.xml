@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/pomodoroFragment"
         android:name="wottrich.github.io.pomodorouniverse.home.presentation.view.PomodoroFragment"
-        tools:layout="@layout/fragment_pomodoro"/>
+        tools:layout="@layout/fragment_pomodoro"
+        android:label=""/>
 
 </navigation>

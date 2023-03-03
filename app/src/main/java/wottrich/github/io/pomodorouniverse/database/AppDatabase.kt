@@ -1,12 +1,17 @@
 package wottrich.github.io.pomodorouniverse.database
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import wottrich.github.io.pomodorouniverse.database.dao.PomodoroTimerDao
 import wottrich.github.io.pomodorouniverse.database.dao.TimerStatusContentDao
 import wottrich.github.io.pomodorouniverse.database.dao.TimerTypeDao
+import wottrich.github.io.pomodorouniverse.database.data.PomodoroTimer
+import wottrich.github.io.pomodorouniverse.database.data.TimerStatusContent
+import wottrich.github.io.pomodorouniverse.database.data.TimerType
 
+@Database(entities = [PomodoroTimer::class, TimerStatusContent::class, TimerType::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pomodoroTimerDao(): PomodoroTimerDao

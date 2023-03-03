@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import wottrich.github.io.pomodorouniverse.R
@@ -50,6 +51,9 @@ class PomodoroFragment : Fragment() {
         binding?.pomodoroButton?.setOnClickListener {
             viewModel.sendAction(PomodoroAction.Action.PomodoroButtonClicked)
         }
+        binding?.newPomodoroButton?.setOnClickListener {
+            findNavController().navigate(R.id.navigateToNewPomodoroNav)
+        }
     }
 
     private fun setupObservers() {
@@ -73,6 +77,7 @@ class PomodoroFragment : Fragment() {
         val statusRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkPomodoroStatus(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakPomodoroStatus(pomodoroState.playerStatus)
+            PomodoroType.LONG_BREAK -> TODO()
         }
         statusRes?.let {
             binding?.pomodoroStatusTextView?.text = getString(it)
@@ -101,6 +106,7 @@ class PomodoroFragment : Fragment() {
         val statusRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkPomodoroSnackbarMessage(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakPomodoroSnackbarMessage(pomodoroState.playerStatus)
+            PomodoroType.LONG_BREAK -> TODO()
         }
         if (statusRes != null) {
             showSnackbar(getString(statusRes), binding?.pomodoroButton)
@@ -139,6 +145,7 @@ class PomodoroFragment : Fragment() {
         val buttonLabelRes = when (pomodoroState.type) {
             PomodoroType.WORK -> getWorkButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
             PomodoroType.BREAK -> getBreakButtonLabelFromPlayerStatus(pomodoroState.playerStatus)
+            PomodoroType.LONG_BREAK -> TODO()
         }
         binding?.pomodoroButton?.text = getString(buttonLabelRes)
     }

@@ -16,8 +16,6 @@ data class PomodoroTimer(
     val notificationUuid: Int = UuidGenerator.getIntRandomUuid(),
     @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "type")
-    val type: PomodoroType = PomodoroType.WORK,
     @ColumnInfo(name = "current_time")
     val currentTime: Long,
 ) {

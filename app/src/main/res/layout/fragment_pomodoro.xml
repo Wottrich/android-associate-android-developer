@@ -67,4 +67,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="1" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/newPomodoroButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/token_normal_x"
+        android:layout_marginBottom="@dimen/token_normal_x"
+        android:text="Adicionar pomodoro"
+        app:layout_constraintBottom_toTopOf="@id/pomodoroButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

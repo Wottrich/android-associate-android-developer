@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nested_nav_host">
 
+    <action
+        android:id="@+id/navigateToNewPomodoroNav"
+        app:destination="@id/new_pomodoro_nav_id"
+        app:enterAnim="@anim/navigation_pop_enter_slide_right"
+        app:exitAnim="@anim/navigation_pop_exit_slide_right"
+        app:popEnterAnim="@anim/navigation_enter_slide_left"
+        app:popExitAnim="@anim/navigation_exit_slide_left" />
+
     <include
         app:graph="@navigation/home_nav_graph"/>
+
+    <include
+        app:graph="@navigation/new_pomodoro_nav"/>
 
 </navigation>

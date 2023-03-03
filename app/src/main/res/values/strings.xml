@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">PomodoroUniverse</string>
 
+    <!--  Default  -->
+    <string name="default_process_label">Continuar</string>
+
     <!--  Button Work State  -->
     <string name="pomodoro_button_paused_work_state_label">Continuar</string>
     <string name="pomodoro_button_running_work_state_label">Pausar</string>
@@ -29,4 +32,10 @@
 
     <!--  Notification Strings  -->
     <string name="notification_pomodoro_timer_title">PomodoroTimer</string>
+
+    <!--  Fragment New Pomodoro  -->
+    <string name="fragment_new_pomodoro_name_toolbal_label">Novo pomodoro</string>
+    <string name="fragment_new_pomodoro_name_screen_title">Escolha um nome para seu novo pomodoro!</string>
+    <string name="fragment_new_pomodoro_name_text_field_hint">Nome do seu pomodoro aqui</string>
+    <string name="fragment_new_pomodoro_name_alternative_option_title">Alguns exemplos para você escolher:</string>
 </resources>

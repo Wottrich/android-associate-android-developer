@@ -133,6 +133,7 @@ class PomodoroViewModel @Inject constructor(
         val nextPomodoroType = when (pomodoroType) {
             PomodoroType.WORK -> PomodoroType.BREAK
             PomodoroType.BREAK -> PomodoroType.WORK
+            PomodoroType.LONG_BREAK -> TODO()
         }
         pomodoroType = nextPomodoroType
         _pomodoroState.value = pomodoroState.value?.copy(type = pomodoroType)
@@ -142,6 +143,7 @@ class PomodoroViewModel @Inject constructor(
         return when (pomodoroType) {
             PomodoroType.WORK -> POMODORO_WORK_TIME_IN_MILLIS
             PomodoroType.BREAK -> POMODORO_BREAK_TIME_IN_MILLIS
+            PomodoroType.LONG_BREAK -> TODO()
         }
     }
 

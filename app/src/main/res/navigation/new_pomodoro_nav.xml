@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_pomodoro_nav_id"
+    app:startDestination="@id/newPomodoroNameFragment">
+
+    <fragment android:id="@+id/newPomodoroNameFragment"
+        android:name="wottrich.github.io.pomodorouniverse.newpomodorotimer.presentation.view.NewPomodoroNameFragment"
+        tools:layout="@layout/fragment_new_pomodoro_name"
+        android:label="@string/fragment_new_pomodoro_name_toolbal_label"/>
+
+</navigation>

@@ -16,7 +16,7 @@ class CircleProgressBar : View {
 
     private var _progress = 0f
     private var _backgroundProgressColor = Color.GRAY
-    private var _foregroundProgressColor = Color.GREEN
+    private var _foregroundProgressColor = Color.BLACK
     private var _maxValue = 100
     private var _strokeWidth = 10f
 
@@ -62,7 +62,7 @@ class CircleProgressBar : View {
         foregroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = _foregroundProgressColor
             style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
+            strokeCap = Paint.Cap.BUTT
             strokeWidth = _strokeWidth * resources.displayMetrics.density
         }
     }
