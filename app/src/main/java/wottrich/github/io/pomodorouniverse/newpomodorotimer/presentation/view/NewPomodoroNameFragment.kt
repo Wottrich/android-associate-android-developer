@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import wottrich.github.io.pomodorouniverse.R
@@ -24,15 +23,7 @@ class NewPomodoroNameFragment : Fragment() {
 
     private var binding: FragmentNewPomodoroNameBinding? = null
     private val viewModel by viewModels<NewPomodoroNameViewModel>()
-    private val adapter by lazy {
-        NewPomodoroNameOptionsAdapter().also {
-            it.setOnClickListener { option ->
-                viewModel.sendAction(
-                    NewPomodoroNameViewModelAction.Action.HandleOptionSelected(option)
-                )
-            }
-        }
-    }
+    private var adapter: NewPomodoroNameOptionsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,10 +51,21 @@ class NewPomodoroNameFragment : Fragment() {
             val text = it?.toString().orEmpty()
             viewModel.sendAction(NewPomodoroNameViewModelAction.Action.TextWatcher(text))
         }
+        binding?.continueButton?.setOnClickListener {
+            viewModel.sendAction(NewPomodoroNameViewModelAction.Action.HandleContinueButtonClick)
+        }
     }
 
     private fun setupAdapter() {
+        adapter = NewPomodoroNameOptionsAdapter().also {
+            it.setOnClickListener { option ->
+                viewModel.sendAction(
+                    NewPomodoroNameViewModelAction.Action.HandleOptionSelected(option)
+                )
+            }
+        }
         binding?.optionsRecyclerView?.apply {
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
             adapter = this@NewPomodoroNameFragment.adapter
         }
     }
@@ -96,21 +98,24 @@ class NewPomodoroNameFragment : Fragment() {
         when (effect) {
             is NewPomodoroNameViewModelUiEffect.OnUpdateSelectedItem -> {
                 if (effect.oldItem != null) {
-                    adapter.notifyItemChanged(effect.oldItem.index, effect.oldItem)
+                    adapter?.notifyItemChanged(effect.oldItem.index, effect.oldItem)
                 }
-                adapter.notifyItemChanged(effect.newItem.index, effect.newItem)
+                adapter?.notifyItemChanged(effect.newItem.index, effect.newItem)
                 binding?.textInputEditTextPomodoroName?.requestFocus()
             }
             is NewPomodoroNameViewModelUiEffect.OnRemoveSelectedItem -> {
                 if (effect.item != null) {
-                    adapter.notifyItemChanged(effect.item.index, effect.item)
+                    adapter?.notifyItemChanged(effect.item.index, effect.item)
                 }
+            }
+            NewPomodoroNameViewModelUiEffect.ContinueButtonClicked -> {
+                findNavController().navigate(R.id.action_newPomodoroNameFragment_to_newPomodoroTimeConfigFragment)
             }
         }
     }
 
     private fun handleOptionsList(options: List<OptionChipUiModel>) {
-        adapter.submitItems(options.toMutableList())
+        adapter?.submitItems(options.toMutableList())
     }
 
 }

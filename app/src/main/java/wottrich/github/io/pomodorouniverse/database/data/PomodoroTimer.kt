@@ -18,6 +18,10 @@ data class PomodoroTimer(
     val name: String,
     @ColumnInfo(name = "current_time")
     val currentTime: Long,
+    @ColumnInfo(name = "current_type")
+    val currentType: PomodoroType,
+    @ColumnInfo(name = "max_breaks")
+    val maxBreaks: Int? = null
 ) {
     fun getFormattedDate(): String {
         return StringFormatter.formatElapsedTime(currentTime)

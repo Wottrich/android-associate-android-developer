@@ -8,6 +8,20 @@
     <fragment android:id="@+id/newPomodoroNameFragment"
         android:name="wottrich.github.io.pomodorouniverse.newpomodorotimer.presentation.view.NewPomodoroNameFragment"
         tools:layout="@layout/fragment_new_pomodoro_name"
-        android:label="@string/fragment_new_pomodoro_name_toolbal_label"/>
+        android:label="@string/fragment_new_pomodoro_name_toolbal_label">
+        <action
+            android:id="@+id/action_newPomodoroNameFragment_to_newPomodoroTimeConfigFragment"
+            app:destination="@id/newPomodoroTimeConfigFragment"
+            app:enterAnim="@anim/navigation_pop_enter_slide_right"
+            app:exitAnim="@anim/navigation_pop_exit_slide_right"
+            app:popEnterAnim="@anim/navigation_enter_slide_left"
+            app:popExitAnim="@anim/navigation_exit_slide_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newPomodoroTimeConfigFragment"
+        android:name="wottrich.github.io.pomodorouniverse.newpomodorotimer.presentation.view.NewPomodoroTimeConfigFragment"
+        tools:layout="@layout/fragment_new_pomodoro_time_config"
+        android:label="@string/fragment_new_pomodoro_name_toolbal_label" />
 
 </navigation>

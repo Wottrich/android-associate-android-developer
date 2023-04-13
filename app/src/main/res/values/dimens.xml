@@ -9,4 +9,8 @@
     <dimen name="token_normal_xx">24dp</dimen>
     <dimen name="token_large">28dp</dimen>
     <dimen name="token_large_x">32dp</dimen>
+    <dimen name="token_large_xx">36dp</dimen>
+    <dimen name="token_large_xxx">40dp</dimen>
+    <dimen name="token_big">44dp</dimen>
+    <dimen name="token_big_x">48dp</dimen>
 </resources>

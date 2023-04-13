@@ -10,4 +10,5 @@ sealed class NewPomodoroNameViewModelUiEffect {
     data class OnRemoveSelectedItem(
         val item: OptionChipUiModel?
     ) : NewPomodoroNameViewModelUiEffect()
+    object ContinueButtonClicked : NewPomodoroNameViewModelUiEffect()
 }

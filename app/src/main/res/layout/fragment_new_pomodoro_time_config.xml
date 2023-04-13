@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@id/continueButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/token_small_x">
+
+            <TextView
+                android:id="@+id/screenTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/token_normal_x"
+                android:layout_marginTop="@dimen/token_normal_x"
+                android:text="@string/fragment_new_pomodoro_time_config_screen_title"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <wottrich.github.io.pomodorouniverse.designsystem.TimerConfigurationCardView
+                android:id="@+id/focusTimeComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/token_normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/screenTitle"
+                app:timerConfigurationDisclaimerLabel="@string/fragment_new_pomodoro_time_config_time_to_focus_section_disclaimer"
+                app:timerConfigurationLeftOptionLabel="@string/fragment_new_pomodoro_time_config_minus_5_minute_button_label"
+                app:timerConfigurationOpened="false"
+                app:timerConfigurationRightOptionLabel="@string/fragment_new_pomodoro_time_config_plus_5_minutes_button_label"
+                app:timerConfigurationTitle="@string/fragment_new_pomodoro_time_config_time_to_focus_section_title" />
+
+            <wottrich.github.io.pomodorouniverse.designsystem.TimerConfigurationCardView
+                android:id="@+id/breakTimeComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/focusTimeComponent"
+                app:timerConfigurationDisclaimerLabel="@string/fragment_new_pomodoro_time_config_time_to_break_section_disclaimer"
+                app:timerConfigurationLeftOptionLabel="@string/fragment_new_pomodoro_time_config_minus_5_minute_button_label"
+                app:timerConfigurationOpened="false"
+                app:timerConfigurationRightOptionLabel="@string/fragment_new_pomodoro_time_config_plus_5_minutes_button_label"
+                app:timerConfigurationTitle="@string/fragment_new_pomodoro_time_config_time_to_break_section_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/longBreakTimeEnabledComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/token_normal"
+                app:layout_constraintTop_toBottomOf="@id/breakTimeComponent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?attr/colorOnBackground"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/componentTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/token_small_x"
+                    android:layout_marginTop="@dimen/token_small_x"
+                    android:text="@string/fragment_new_pomodoro_time_config_enable_time_to_long_break_section_title"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/checkboxEnableLongBreakTime"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkboxEnableLongBreakTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/token_small"
+                    android:button="@drawable/checkbox_selector"
+                    app:buttonTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/componentTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/componentTitle" />
+
+                <TextView
+                    android:id="@+id/disclaimerLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/token_small_x"
+                    android:layout_marginTop="@dimen/token_small_x"
+                    android:text="@string/fragment_new_pomodoro_time_config_enable_time_to_long_break_section_disclaimer"
+                    android:textAlignment="inherit"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    app:layout_constraintTop_toBottomOf="@id/componentTitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <wottrich.github.io.pomodorouniverse.designsystem.TimerConfigurationCardView
+                android:id="@+id/longBreakTimeComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/longBreakTimeEnabledComponent"
+                app:timerConfigurationDisclaimerLabel="@string/fragment_new_pomodoro_time_config_time_to_long_break_section_disclaimer"
+                app:timerConfigurationLeftOptionLabel="@string/fragment_new_pomodoro_time_config_minus_5_minute_button_label"
+                app:timerConfigurationOpened="false"
+                app:timerConfigurationRightOptionLabel="@string/fragment_new_pomodoro_time_config_plus_5_minutes_button_label"
+                app:timerConfigurationTitle="@string/fragment_new_pomodoro_time_config_time_to_long_break_section_title" />
+
+            <wottrich.github.io.pomodorouniverse.designsystem.TimerConfigurationCardView
+                android:id="@+id/longBreakIntervalComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/longBreakTimeComponent"
+                app:timerConfigurationDisclaimerLabel="@string/fragment_new_pomodoro_time_config_time_to_long_break_max_of_breaks_section_disclamer"
+                app:timerConfigurationLeftOptionLabel="@string/fragment_new_pomodoro_time_config_minus_1_button_label"
+                app:timerConfigurationOpened="false"
+                app:timerConfigurationRightOptionLabel="@string/fragment_new_pomodoro_time_config_plus_1_button_label"
+                app:timerConfigurationTitle="@string/fragment_new_pomodoro_time_config_time_to_long_break_max_of_breaks_section_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="@dimen/token_normal_x"
+        android:layout_marginVertical="@dimen/token_small_x"
+        android:text="@string/default_process_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

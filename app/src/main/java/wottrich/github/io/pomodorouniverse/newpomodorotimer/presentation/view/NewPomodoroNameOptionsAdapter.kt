@@ -12,8 +12,13 @@ class NewPomodoroNameOptionsAdapter : RecyclerView.Adapter<NewPomodoroNameOption
     private var onClickListener: ((OptionChipUiModel) -> Unit)? = null
 
     fun submitItems(newItems: MutableList<OptionChipUiModel>) {
-        this.items = newItems
-        notifyItemRangeInserted(0, newItems.size)
+        if (items != newItems) {
+            items.clear()
+            items.addAll(newItems)
+            notifyItemRangeInserted(0, newItems.size)
+        } else {
+            notifyDataSetChanged()
+        }
     }
 
     fun setOnClickListener(onClickListener: (OptionChipUiModel) -> Unit) {

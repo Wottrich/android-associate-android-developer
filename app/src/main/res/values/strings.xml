@@ -4,6 +4,10 @@
     <!--  Default  -->
     <string name="default_process_label">Continuar</string>
 
+    <!--  Format  -->
+    <string name="minutes_format">%s minutos</string>
+    <string name="breaks_format">%s intervalos</string>
+
     <!--  Button Work State  -->
     <string name="pomodoro_button_paused_work_state_label">Continuar</string>
     <string name="pomodoro_button_running_work_state_label">Pausar</string>
@@ -35,7 +39,25 @@
 
     <!--  Fragment New Pomodoro  -->
     <string name="fragment_new_pomodoro_name_toolbal_label">Novo pomodoro</string>
-    <string name="fragment_new_pomodoro_name_screen_title">Escolha um nome para seu novo pomodoro!</string>
+    <string name="fragment_new_pomodoro_name_screen_title"><b>Escolha um nome</b> para seu novo pomodoro!</string>
     <string name="fragment_new_pomodoro_name_text_field_hint">Nome do seu pomodoro aqui</string>
     <string name="fragment_new_pomodoro_name_alternative_option_title">Alguns exemplos para você escolher:</string>
+    <string name="fragment_new_pomodoro_time_config_screen_title"><b>Defina os tempos</b> para o seu novo pomodoro!</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_focus_section_title">Tempo de foco</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_focus_section_disclaimer">Recomendamos que você tente balancear seu tempo de foco com o tempo de intervalo, pois um grande tempo de foco pode acarretar em pequenas distrações. (Recomendado 25 minutos de foco)</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_break_section_title">Tempo de intervalo</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_break_section_disclaimer">O intervalo serve para te ajudar a relaxar enquanto está focando, tente balancear esse tempo com o seu tempo de foco, assim podendo aumentar sua produtividade quando focado. (Recomendado 5 minutos de intervalo)</string>
+    <string name="fragment_new_pomodoro_time_config_enable_time_to_long_break_section_title">Habilitar intervalo longo</string>
+    <string name="fragment_new_pomodoro_time_config_enable_time_to_long_break_section_disclaimer">Após um certo numero de intervalos, definido nessa seção, você terá um intervalo maior que ajuda seu cerebro a oxigenar melhor e aumentar sua agilidade mental.</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_long_break_section_title">Tempo de intervalo longo</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_long_break_section_disclaimer">O intervalo longo serve para tomar um tempo maior para seu cerebro poder descansar por mais tempo, aumentando sua agilidade mental para o próximo foco! (Recomendado 15 à 30 minutos)</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_long_break_max_of_breaks_section_title">Numero de intervalos</string>
+    <string name="fragment_new_pomodoro_time_config_time_to_long_break_max_of_breaks_section_disclamer">Quantos intervalos normais você terá antes de um intervalo longo. (recomendado: 4 intervalos)</string>
+    <string name="fragment_new_pomodoro_time_config_plus_1_button_label">+1</string>
+    <string name="fragment_new_pomodoro_time_config_minus_1_button_label">-1</string>
+    <string name="fragment_new_pomodoro_time_config_plus_5_minutes_button_label">+5 minutos</string>
+    <string name="fragment_new_pomodoro_time_config_minus_5_minute_button_label">-5 minutos</string>
+
+
+
 </resources>

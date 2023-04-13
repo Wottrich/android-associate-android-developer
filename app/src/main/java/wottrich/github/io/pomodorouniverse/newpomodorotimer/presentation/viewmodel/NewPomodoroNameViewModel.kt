@@ -77,6 +77,7 @@ class NewPomodoroNameViewModel : ViewModel(), NewPomodoroNameViewModelAction {
     }
 
     private fun handleContinueButtonClick() {
+        _uiEffect.emit(NewPomodoroNameViewModelUiEffect.ContinueButtonClicked)
     }
 
     private fun onTextWatcher(typedText: String) {
